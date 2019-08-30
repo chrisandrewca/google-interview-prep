@@ -8,7 +8,8 @@ namespace Sorting
 	{
 		private static Dictionary<string, IRunnable> sorts = new Dictionary<string, IRunnable>()
 		{
-			{ "q", new QuickSort() }
+			{ "q", new QuickSort() },
+			{ "m", new MergeSort() }
 		};
 
 		public static void Main(string[] args)

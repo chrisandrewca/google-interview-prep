@@ -4,4 +4,5 @@ csc ^
 ..\Utils\IRunnable.cs ^
 ..\Utils\Utils.cs ^
 Main.cs ^
-QuickSort.cs
+QuickSort.cs ^
+MergeSort.cs

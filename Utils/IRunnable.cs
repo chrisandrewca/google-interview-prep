@@ -1,4 +1,4 @@
-namespace Utils
+namespace Utilities
 {
 	public interface IRunnable
 	{

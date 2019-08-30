@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Utils;
+using Utilities;
 
 namespace Sorting
 {

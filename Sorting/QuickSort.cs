@@ -1,5 +1,5 @@
 using System;
-using Utils;
+using Utilities;
 
 namespace Sorting
 {
@@ -9,7 +9,7 @@ namespace Sorting
 		{
 			Console.WriteLine("QuickSort");
 
-			var numbers = Utilities.GenInts(-10, 10, 20).ToArray();
+			var numbers = Utils.GenInts(-10, 10, 20).ToArray();
 
 			foreach (var n in numbers)
 			{
@@ -17,7 +17,8 @@ namespace Sorting
 			}
 			Console.WriteLine();
 
-			QSort(numbers, 0, numbers.Length - 1);
+			// QSort(numbers, 0, numbers.Length - 1);
+			RQSort(numbers, 0, numbers.Length - 1);
 
 			foreach (var n in numbers)
 			{
@@ -58,6 +59,36 @@ namespace Sorting
 
 		private void RQSort(int[] numbers, int start, int length)
 		{
+			if (start < length)
+			{
+				var partition = RPartition(numbers, start, length);
+				RQSort(numbers, start, partition - 1);
+				RQSort(numbers, partition + 1, length);
+			}
+		}
+
+		private int RPartition(int[] numbers, int start, int length)
+		{
+			// single random qsort
+			/*
+			var i = Utils.GenInt(start, length);
+			var p = numbers[i];
+			numbers[i] = numbers[length];
+			numbers[length] = p;
+			return Partition(numbers, start, length);*/
+
+			// multiple random qsort
+			var potentials = new int[3];
+			potentials[0] = Utils.GenInt(start, length);
+			potentials[1] = Utils.GenInt(start, length);
+			potentials[2] = Utils.GenInt(start, length);
+			QSort(potentials, 0, 2);
+
+			var i = potentials[1];
+			var p = numbers[i];
+			numbers[i] = numbers[length];
+			numbers[length] = p;
+			return Partition(numbers, start, length);
 		}
 	}
 }

@@ -17,7 +17,7 @@ namespace Sorting
 			}
 			Console.WriteLine();
 
-			MSort(numbers, 0, numbers.Length - 1);
+			MSort(numbers);
 
 			foreach (var n in numbers)
 			{
@@ -26,35 +26,58 @@ namespace Sorting
 			Console.WriteLine();
 		}
 
-		public MSort(int[] numbers, int start, int end)
+		public void MSort(int[] array)
+		{
+			var temp = new int[array.Length]; // talk about space complexity O(n)
+			MSort(array, temp, 0, array.Length - 1);
+		}
+
+		public void MSort(int[] array, int[] temp, int start, int end)
 		{
 			if (start < end)
 			{
-				var partition = (start + end) / 2;
-				MSort(numbers, start, partition - 1);
-				MSort(numbers, partition - 1, end);
-				Merge(numbers, start, partition, end);
+				var middle = (start + end) / 2;
+				MSort(array, temp, start, middle);
+				MSort(array, temp, middle + 1, end);
+				Merge(array, temp, start, end);
 			}
 		}
 
-		public void Merge(int[] numbers, int start, int partition, int end)
+		public void Merge(int[] array, int[] temp, int start, int end)
 		{
-			var lowHalf = new int[partition + 1];
-			var highHalf = new int[end - partition + 1];
+			var left = start;
+			var middle = (start + end) / 2;
+			var right = middle + 1;
+			var i = start;
 
-			var k = start;
-			for (var i = 0; k <= partition; k++, i++)
+			while (left <= middle && right <= end)
 			{
-				lowHalf[i] = numbers[k];
+				if (array[left] <= array[right])
+				{
+					temp[i] = array[left];
+					left++;
+				}
+				else
+				{
+					temp[i] = array[right];
+					right++;
+				}
+				i++;
 			}
 
-			for (var i = 0; k <= end; k++, i++)
+			for (; left <= middle; left++, i++)
 			{
-				highHalf[i] = numbers[k];
+				temp[i] = array[left];
 			}
 
-			if (start >= end)
+			for (; right <= end; right++, i++)
 			{
+				temp[i] = array[right];
+			}
+
+			for (i = start; i <= end; i++)
+			{
+				array[i] = temp[i];
 			}
 		}
 	}

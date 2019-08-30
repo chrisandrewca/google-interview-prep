@@ -1,4 +1,5 @@
 csc ^
+-debug ^
 /target:exe ^
 /out:..\Build\sorting.exe ^
 ..\Utils\IRunnable.cs ^

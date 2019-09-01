@@ -8,7 +8,7 @@ namespace HashTables
 	{
 		private static Dictionary<string, IRunnable> hashTables = new Dictionary<string, IRunnable>()
 		{
-			{ "h", new HashTable() }
+			{ "i", new HashTableInt() }
 		};
 
 		public static void Main(string[] args)

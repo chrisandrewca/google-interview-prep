@@ -5,4 +5,4 @@ csc ^
 ..\Utils\IRunnable.cs ^
 ..\Utils\Utils.cs ^
 Main.cs ^
-HashTable.cs
+HashTableInt.cs

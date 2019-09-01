@@ -8,8 +8,8 @@ namespace HashTables
 		private const int ACTIVE = 1;
 		private const int INACTIVE = 0;
 
-		private int[] storage = new int[6151];
-		private int[] active = new int[6151];
+		private int[] storage = new int[193];
+		private int[] active = new int[193];
 
 		public void Run()
 		{

@@ -1,4 +1,5 @@
 using System;
+using LinkedLists;
 using Utilities;
 
 namespace HashTables
@@ -8,13 +9,14 @@ namespace HashTables
 		private const int ACTIVE = 1;
 		private const int INACTIVE = 0;
 
-		private int[] storage = new int[193];
-		private int[] active = new int[193];
+		//private int[] storage = new int[193];
+		//private int[] active = new int[193];
+		private LinkedListInt[] storage = new LinkedListInt[12289];
 
 		public void Run()
 		{
 			Console.WriteLine("HashTableInt");
-
+/*
 			var keys = Utils.GenInts(-10, 10, 5);
 
 			Console.WriteLine("Inserting...");
@@ -39,7 +41,17 @@ namespace HashTables
 			Insert(1, 1);
 			Delete(1);
 			Insert(1, 2);
-			Console.WriteLine(Get(1));
+			Console.WriteLine(Get(1));*/
+
+			for (var i = -6100; i <= 6100; i++)
+			{
+				Insert(i, i);
+			}
+
+			for (var i = -6100; i <= 6100; i++)
+			{
+				Console.WriteLine(Get(i));
+			}
 		}
 /*
 	public object this[int i]
@@ -59,14 +71,23 @@ namespace HashTables
 			 * How to grow a nearly full or full storage space?
 			 * Will index ever be out of bounds?
 			 */
-			if (active[index] == INACTIVE)
+			if (storage[index] == null)
 			{
-				storage[index] = value;
-				active[index] = ACTIVE;
+				storage[index] = new LinkedListInt();
+			}
+
+			var node = storage[index].Find(key);
+			if (node == null)
+			{
+				storage[index].Add(new NodeInt()
+				{
+					Key = key,
+					Value = value
+				});
 			}
 			else
 			{
-				Console.WriteLine("::Insert - Collision, skipping for now.");
+				Console.WriteLine("::Insert - key already exists");
 			}
 		}
 
@@ -79,8 +100,21 @@ namespace HashTables
 			 * How to check if there's a valid value at location?
 			 * Will index ever be out of bounds?
 			 */
-			var value = storage[index];
-			return value;
+			if (storage[index] != null)
+			{
+				var node = storage[index].Find(key);
+				if (node != null)
+				{
+					Console.WriteLine($"::Get - Length: {storage[index].Length}");
+					return node.Value;
+				}
+				else
+				{
+					Console.WriteLine("::Get - key does not exist");
+					throw new ArgumentException();
+				}
+			}
+			throw new ArgumentException();
 		}
 
 		public void Delete(int key)
@@ -91,7 +125,10 @@ namespace HashTables
 			 * TODO
 			 * How to delete?
 			 */
-		 	active[index] = INACTIVE;
+		 	if (storage[index] != null)
+			{
+			 	storage[index].Delete(key);
+	 		}
 		}
 
 		/*
@@ -106,6 +143,30 @@ namespace HashTables
 			//Console.WriteLine($"::GetHash - storage.Length {storage.Length}");
 			Console.WriteLine($"::GetHash - index {index}");
 			return index;
+		}
+
+		// @Insert
+		private void Grow()
+		{
+			/*
+			if (insertedCount >= storage.Length / 2)
+			{
+				var nextPrime = primeList[++primeIndex];
+				var newStorage = new int[nextPrime];
+				for (var i = 0; i < storage.Length; i++)
+				{
+					var list = storage[i];
+					if (list != null)
+					{
+						var key = list.Head.key;
+						var hash = GetHash(key);
+						newStorage[hash] = list;
+					}
+				}
+
+				storage = newStorage;
+			}
+			*/
 		}
 	}
 }

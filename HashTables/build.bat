@@ -5,4 +5,5 @@ csc ^
 ..\Utils\IRunnable.cs ^
 ..\Utils\Utils.cs ^
 Main.cs ^
-HashTableInt.cs
+HashTableInt.cs ^
+..\LinkedList\LinkedListInt.cs

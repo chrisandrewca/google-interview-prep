@@ -9,6 +9,7 @@ namespace LinkedLists
 		public NodeInt Prev { get; set; }
 		public NodeInt Next { get; set; }
 		public int Key { get; set; }
+		public int Value { get; set; }
 	}
 
 	public class LinkedListInt : IRunnable
@@ -53,9 +54,12 @@ namespace LinkedLists
 
 		private NodeInt head;
 
+		public int Length { get; private set; }
+
 		public LinkedListInt()
 		{
 			head = null;
+			Length = 0;
 		}
 
 		public void Add(NodeInt node)
@@ -66,6 +70,7 @@ namespace LinkedLists
 				head.Prev = node;
 			}
 			head = node;
+			Length++;
 		}
 
 		public NodeInt Find(int key)
@@ -97,6 +102,8 @@ namespace LinkedLists
 				{
 					node.Next.Prev = node.Prev;
 				}
+
+				Length--;
 			}
 		}
 	}

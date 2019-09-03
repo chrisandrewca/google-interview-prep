@@ -60,6 +60,7 @@ namespace HashTables
 	    set { InnerList[i] = value; }
 	}
 */
+		// TODO hash strings, maybe objs
 		public void Insert(int key, int value)
 		{
 			var index = GetHash(key);

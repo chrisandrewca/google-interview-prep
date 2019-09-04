@@ -8,7 +8,8 @@ namespace Trees
 	{
 		private static Dictionary<string, IRunnable> trees = new Dictionary<string, IRunnable>()
 		{
-			{ "b", new BinarySearchTreeInt() }
+			{ "b", new BinarySearchTreeInt() },
+			{ "rb", new RedBlackTree() }
 		};
 
 		public static void Main(string[] args)

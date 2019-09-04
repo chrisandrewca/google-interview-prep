@@ -132,5 +132,31 @@ namespace Trees
 
 			Console.Write($"{data},");
 		}
+
+		public BinarySearchTreeInt Minimum(BinarySearchTreeInt node)
+		{
+			while (node.left != null)
+			{
+				node = node.left;
+			}
+			return node;
+		}
+
+		public BinarySearchTreeInt Maximum(BinarySearchTreeInt node)
+		{
+			while (node.right != null)
+			{
+				node = node.right;
+			}
+			return node;
+		}
+
+		public BinarySearchTreeInt Successor(BinarySearchTreeInt node)
+		{
+			if (node.right != null)
+			{
+				return Minimum(node);
+			}
+		}
 	}
 }

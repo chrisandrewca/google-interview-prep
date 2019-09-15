@@ -1,18 +1,18 @@
 using System;
 using System.Collections.Generic;
 
-namespace Utilities
+namespace GPrep
 {
-	public class Utils
+	public class Utility
 	{
 		private static Random rng = new Random();
 
-		public static List<int> GenInts(int lower, int upper, int size)
+		public static int[] GenInts(int lower, int upper, int size)
 		{
-			var ints = new List<int>();
+			var ints = new int[size];
 			for (var i = 0; i < size; i++)
 			{
-				ints.Add(rng.Next(lower, upper));
+				ints[i] = rng.Next(lower, upper);
 			}
 			return ints;
 		}

@@ -12,6 +12,7 @@ namespace GPrep
 
 	public class LinkedList<T>
 	{
+		public int Count { get; private set; }
 		public ListNode<T> Head { get; private set; }
 		public ListNode<T> Tail { get; private set; }
 
@@ -47,6 +48,7 @@ namespace GPrep
 			}
 
 			Tail = node;
+			Count++;
 
 			return node;
 		}
@@ -67,6 +69,7 @@ namespace GPrep
 			}
 
 			Head = node;
+			Count++;
 
 			return node;
 		}
@@ -81,6 +84,19 @@ namespace GPrep
 		{
 			if (node != null)
 			{
+				// reference comparison....
+				// if node was created with same value to be used as key to remove...
+				// will not be found, unless implmented with EqualityComparer
+				if (node == Head)
+				{
+					Head = node.Next;
+				}
+
+				if (node == Tail)
+				{
+					Tail = node.Prev;
+				}
+
 				if (node.Prev != null)
 				{
 					node.Prev.Next = node.Next;
@@ -90,6 +106,8 @@ namespace GPrep
 				{
 					node.Next.Prev = node.Prev;
 				}
+
+				Count--;
 			}
 		}
 	}

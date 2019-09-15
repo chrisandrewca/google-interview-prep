@@ -2,25 +2,25 @@ using System;
 
 namespace GPrep
 {
-	public class Stack<T>
+	public class Queue<T>
 	{
 		private LinkedList<T> items = new LinkedList<T>();
 
 		public int Count { get => items.Count; }
 
-		public T Pop()
+		public T Dequeue()
 		{
-			if (items.Head == null)
+			if (items.Tail == null)
 			{
 				throw new InvalidOperationException();
 			}
 
-			var last = items.Head;
-			items.Remove(last);
-			return last.Value;
+			var first = items.Tail;
+			items.Remove(first);
+			return first.Value;
 		}
 
-		public void Push(T value)
+		public void Enqueue(T value)
 		{
 			items.InsertFront(value);
 		}

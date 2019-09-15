@@ -8,4 +8,6 @@ csc ^
 .\src\InsertionSort.cs ^
 .\src\QuickSort.cs ^
 .\src\LinkedList.cs ^
-.\src\Stack.cs && .\build\gprep.exe %*
+.\src\Stack.cs ^
+.\src\Queue.cs ^
+.\src\BinarySearchTree.cs && .\build\gprep.exe %*

@@ -128,7 +128,7 @@ namespace GPrep
 				Debug.Assert(q.Count == 1 && q.Dequeue() == 2);
 			};
 
-			// Binary Search Tree, Search O(nlgn)
+			// Binary Search Tree, Search avg O(lgn)
 			runners["bst"] = () =>
 			{
 				var numbers = Utility.GenInts(-100, 100, 100);
@@ -163,6 +163,12 @@ namespace GPrep
 
 				bst.Insert(2);
 				Debug.Assert(bst.Count == 1 && bst.Find(2) != null && bst.Find(2).Value == 2);
+			};
+
+			// Red Black Tree, Search O(lgn)
+			runners["rbt"] = () =>
+			{
+				var rbt = new RedBlackTree<int>();
 			};
 		}
 	}

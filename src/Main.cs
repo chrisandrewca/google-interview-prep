@@ -168,7 +168,38 @@ namespace GPrep
 			// Red Black Tree, Search O(lgn)
 			runners["rbt"] = () =>
 			{
+				var numbers = Utility.GenInts(-100, 100, 100);
+				//Console.WriteLine(string.Join(", ", numbers) + "\n");
+
 				var rbt = new RedBlackTree<int>();
+				foreach (var n in numbers)
+				{
+					rbt.Insert(n);
+				}
+
+				Debug.Assert(rbt.Count == numbers.Length);
+
+				var inOrderValues = rbt.GetInOrder();
+				Debug.Assert(inOrderValues.Length == numbers.Length);
+
+				new QuickSort().Sort(numbers);
+				for (var i = 0; i < numbers.Length; i++)
+				{
+					var rbtv = inOrderValues[i];
+					var n = numbers[i];
+					Debug.Assert(rbtv == n);
+
+					var node = rbt.Find(n);
+					Debug.Assert(node != null && node.Value == n);
+
+					rbt.Remove(node.Value);
+				}
+
+				rbt.Remove(0);
+				Debug.Assert(rbt.Count == 0);
+
+				rbt.Insert(2);
+				Debug.Assert(rbt.Count == 1 && rbt.Find(2) != null && rbt.Find(2).Value == 2);
 			};
 		}
 	}

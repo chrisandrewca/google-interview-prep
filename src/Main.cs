@@ -201,6 +201,57 @@ namespace GPrep
 				rbt.Insert(2);
 				Debug.Assert(rbt.Count == 1 && rbt.Find(2) != null && rbt.Find(2).Value == 2);
 			};
+
+			// Graph, adjacency list
+			runners["g"] = () =>
+			{
+				var numbers = Utility.GenInts(-100, 100, 100);
+				//Console.WriteLine(string.Join(", ", numbers) + "\n");
+
+				var graph = new Graph<int>();
+				var _nodes = new List<GraphNode<int>>();
+				foreach (var n in numbers)
+				{
+					Console.WriteLine("Add");
+					var node = graph.AddNode(n);
+					_nodes.Add(node);
+				}
+
+				Debug.Assert(graph.Nodes.Count == numbers.Length);
+
+				foreach (var node in _nodes)
+				{
+					// Utility.GenInt impl is weird
+
+					// single edge, multi edge, self reference, ...
+					var a = _nodes[Utility.GenInt(0, _nodes.Count - 2)];
+					var b = _nodes[Utility.GenInt(0, _nodes.Count - 2)];
+
+					var cost = Utility.GenInt(0, 99);
+					Console.WriteLine("AddUndirectedEdge");
+					graph.AddUndirectedEdge(a, b, cost);
+
+					Console.WriteLine("a.Neighbors.Find(b)");
+					Debug.Assert(a.Neighbors.Find(b).Value == b);
+					Console.WriteLine("b.Neighbors.Find(a)");
+					Debug.Assert(b.Neighbors.Find(a).Value == a);
+
+					Console.WriteLine("a.Costs.Find(cost)");
+					Debug.Assert(a.Costs.Find(cost).Value == cost);
+					Console.WriteLine("b.Costs.Find(cost)");
+					Debug.Assert(b.Costs.Find(cost).Value == cost);
+				}
+
+				foreach (var node in _nodes)
+				{
+					Console.WriteLine("RemoveNode");
+					graph.RemoveNode(node);
+				}
+
+				graph.RemoveNode(_nodes[0]);
+				graph.RemoveNode(null);
+				Debug.Assert(graph.Nodes.Count == 0);
+			};
 		}
 	}
 }

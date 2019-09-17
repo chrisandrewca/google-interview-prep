@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace GPrep
@@ -12,9 +13,16 @@ namespace GPrep
 
 	public class LinkedList<T>
 	{
+		private ListNode<T>[] nodes = new ListNode<T>[1];
+
 		public int Count { get; private set; }
 		public ListNode<T> Head { get; private set; }
 		public ListNode<T> Tail { get; private set; }
+
+		public ListNode<T> this[int i]
+		{
+			get => nodes[i];
+		}
 
 		public ListNode<T> Find(T value)
 		{
@@ -48,8 +56,8 @@ namespace GPrep
 			}
 
 			Tail = node;
-			Count++;
 
+			IndexNode(node);
 			return node;
 		}
 
@@ -69,8 +77,8 @@ namespace GPrep
 			}
 
 			Head = node;
-			Count++;
 
+			IndexNode(node);
 			return node;
 		}
 
@@ -107,8 +115,30 @@ namespace GPrep
 					node.Next.Prev = node.Prev;
 				}
 
-				Count--;
+				DeIndexNode();
 			}
+		}
+
+		private void IndexNode(ListNode<T> node)
+		{
+			nodes[Count] = node;
+			Count++;
+
+			if (Count == nodes.Length)
+			{
+				var temp = new ListNode<T>[Count * 2];
+				for (var i = 0; i < nodes.Length; i++)
+				{
+					temp[i] = nodes[i];
+				}
+				nodes = temp;
+			}
+		}
+
+		private void DeIndexNode()
+		{
+			nodes[Count] = null;
+			Count--;
 		}
 	}
 }

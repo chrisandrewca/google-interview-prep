@@ -12,4 +12,5 @@ csc ^
 .\src\Queue.cs ^
 .\src\BinarySearchTree.cs ^
 .\src\RedBlackTree.cs ^
-.\src\Graph.cs && .\build\gprep.exe %*
+.\src\Graph.cs ^
+.\src\HashTable.cs  && .\build\gprep.exe %*

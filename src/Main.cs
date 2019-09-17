@@ -302,6 +302,24 @@ namespace GPrep
 				Debug.Assert(nodes.Count == 3);
 				PrintList<int>(nodes);
 			};
+
+			runners["h"] = () =>
+			{
+				var table = new HashTable<int, GraphNode<double>>();
+				for (var i = -10; i <= 10; i++)
+				{
+					table.Add(i, new GraphNode<double>(i, i + 0.3));
+				}
+
+				Debug.Assert(table.Count == 21);
+
+				for (var i = 10; i >= -10; i--)
+				{
+					var node = table.Find(i);
+					Debug.Assert((i + 0.3) == node.Value);
+					Console.WriteLine($"K: {i} V: {node.Value}");
+				}
+			};
 		}
 
 		static void PrintList<T>(LinkedList<GraphNode<T>> list)

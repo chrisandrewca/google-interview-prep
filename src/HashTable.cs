@@ -23,6 +23,7 @@ namespace GPrep
 			public override bool Equals(object other)
 			{
 				var o = (HashKey)other;
+				Console.WriteLine($"this: {Key} other: {o.Key}");
 				return Key.Equals(o.Key);
 			}
 
@@ -67,12 +68,29 @@ namespace GPrep
 			var i = HashIndex(buckets.Length, key);
 			if (buckets[i] != null)
 			{
-				return buckets[i].Find(new HashKey(key, default(V))).Value.Value;
+				// could be null because of hash function skew where k=0 => k=1
+				var v = buckets[i].Find(new HashKey(key, default(V)));
+				return (v == null) ? default(V) : v.Value.Value;
 			}
 			else
 			{
 				return default(V);
 			}
+		}
+
+		public LinkedList<V> GetValues()
+		{
+			var values = new LinkedList<V>();
+			for (var i = 0; i < buckets.Length; i++)
+			{
+				var node = buckets[i]?.Head;
+				while (node != null)
+				{
+					values.InsertBack(node.Value.Value);
+					node = node.Next;
+				}
+			}
+			return values;
 		}
 
 /*

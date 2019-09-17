@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace GPrep
@@ -23,12 +24,12 @@ namespace GPrep
 			{
 				if (node.Value.Equals(value))
 				{
-					break;
+					return node;
 				}
 				node = node.Next;
 			}
 
-			return node;
+			return null;
 		}
 
 		public ListNode<T> InsertBack(T value)

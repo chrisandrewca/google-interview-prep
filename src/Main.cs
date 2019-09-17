@@ -301,6 +301,16 @@ namespace GPrep
 				nodes = graph.BFS(_4);
 				Debug.Assert(nodes.Count == 3);
 				PrintList<int>(nodes);
+
+				Console.WriteLine("DFS 2");
+				nodes = _DFS<int>(_1);
+				Debug.Assert(nodes.Count == 3);
+				PrintList<int>(nodes);
+
+				Console.WriteLine("BFS 2");
+				nodes = _DFS<int>(_4);
+				Debug.Assert(nodes.Count == 3);
+				PrintList<int>(nodes);
 			};
 
 			runners["h"] = () =>
@@ -352,6 +362,51 @@ namespace GPrep
 				node = node.Next;
 			}
 			Console.WriteLine();
+		}
+
+		static LinkedList<GraphNode<T>> _DFS<T>(GraphNode<T> start)
+		{
+			var visited = new HashTable<int, GraphNode<T>>();
+			__DFS(start, visited);
+			return visited.GetValues();
+		}
+
+		static void __DFS<T>(GraphNode<T> start, HashTable<int, GraphNode<T>> visited)
+		{
+			while (start != null && visited.Find(start.Key) == null)
+			{
+				visited.Add(start.Key, start);
+				var neighbor = start.Neighbors.Head;
+				while (neighbor != null)
+				{
+					__DFS(neighbor.Value, visited);
+					neighbor = neighbor.Next;
+				}
+			}
+		}
+
+		static LinkedList<GraphNode<T>> _BFS<T>(LinkedList<GraphNode<T>> nodes)
+		{
+			var visited = new HashTable<int, GraphNode<T>>();
+			var searching = new Queue<GraphNode<T>>();
+
+			searching.Enqueue(nodes.Head.Value);
+
+			while (searching.Count > 0)
+			{
+				var node = searching.Dequeue();
+				var neighbor = node.Neighbors.Head;
+				while (neighbor != null)
+				{
+					if (visited.Find(neighbor.Value.Key) == null)
+					{
+						searching.Enqueue(neighbor.Value);
+					}
+					neighbor = neighbor.Next;
+				}
+				visited.Add(node.Key, node);
+			}
+			return visited.GetValues();
 		}
 	}
 }

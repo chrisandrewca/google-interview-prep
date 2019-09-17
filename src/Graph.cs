@@ -28,6 +28,7 @@ namespace GPrep
 		public override bool Equals(object other)
 		{
 			var o = (GraphNode<T>)other;
+			Console.WriteLine($"G this: {Key} G other: {o.Key}");
 			return Key.Equals(o.Key);
 		}
 

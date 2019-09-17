@@ -106,7 +106,7 @@ namespace GPrep
 			// TODO fix or use another hashing algorithm
 			dynamic k = key;
 			if (k == 0) k = 1;
-			return length % k;
+			return Math.Abs(k) % length;
 		}
 	}
 }

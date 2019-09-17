@@ -320,6 +320,27 @@ namespace GPrep
 					Console.WriteLine($"K: {i} V: {node.Value}");
 				}
 			};
+
+			runners["t"] = () =>
+			{
+				var trie = new TrieTree();
+				trie.Insert("Tomato");
+				trie.Insert("Potato");
+				trie.Insert("Tom");
+				trie.Insert("Tomboy");
+				trie.Insert("Tommy");
+				trie.Insert("Tomato2");
+
+				Debug.Assert(trie.Find("Tomato"));
+				Debug.Assert(trie.Find("Potato"));
+				Debug.Assert(trie.Find("Tom"));
+				Debug.Assert(trie.Find("Tomboy"));
+				Debug.Assert(trie.Find("Tommy"));
+				Debug.Assert(trie.Find("Tomato2"));
+				Debug.Assert(trie.Find("To") == false);
+				Debug.Assert(trie.Find("Tomat") == false);
+				Debug.Assert(trie.Find("") == false);
+			};
 		}
 
 		static void PrintList<T>(LinkedList<GraphNode<T>> list)

@@ -51,11 +51,18 @@ namespace GPrep
 			to.Costs.InsertBack(cost);
 		}
 
-		public LinkedList<GraphNode<T>> DFSTraverse(GraphNode<T> start)
+		public LinkedList<GraphNode<T>> BFS(GraphNode<T> start)
+		{
+			var visited = new LinkedList<GraphNode<T>>();
+			BFS(start, visited);
+			return visited;
+		}
+
+		public LinkedList<GraphNode<T>> DFS(GraphNode<T> start)
 		{
 			// TODO make HashTable?
 			var visited = new LinkedList<GraphNode<T>>();
-			DFSTraverse(start, visited);
+			DFS(start, visited);
 			return visited;
 		}
 
@@ -68,10 +75,9 @@ namespace GPrep
 			var node = Nodes.Head;
 			while (node != null)
 			{
-				Console.WriteLine($"node: {node.Value.Value} visited: {visited.Count}");
 				if (visited.Find(node.Value) == null)
 				{
-					DFSTraverse(node.Value, component);
+					DFS(node.Value, component);
 
 					var cnode = component.Head;
 					while (cnode != null)
@@ -126,7 +132,33 @@ namespace GPrep
 			}
 		}
 
-		private void DFSTraverse(GraphNode<T> start, LinkedList<GraphNode<T>> visited)
+		private void BFS(GraphNode<T> start, LinkedList<GraphNode<T>> visited)
+		{
+			var searching = new GPrep.Queue<GraphNode<T>>();
+
+			searching.Enqueue(start);
+			while (searching.Count > 0)
+			{
+				var node = searching.Dequeue();
+				var neighbor = node.Neighbors.Head;
+				var cost = node.Costs.Head;
+				while (neighbor != null)
+				{
+					if (visited.Find(neighbor.Value) == null) // TODO could be faster
+					{
+						searching.Enqueue(neighbor.Value);
+					}
+					neighbor = neighbor.Next;
+				}
+
+				if (visited.Find(node) == null) // TODO improve, last node is repeated w/o guard
+				{
+					visited.InsertBack(node);
+				}
+			}
+		}
+
+		private void DFS(GraphNode<T> start, LinkedList<GraphNode<T>> visited)
 		{
 			if (start != null && visited.Find(start) == null) // TODO O(n), can be improved
 			{
@@ -135,7 +167,7 @@ namespace GPrep
 				var neighbor = start.Neighbors.Head;
 				while (neighbor != null)
 				{
-					DFSTraverse(neighbor.Value, visited);
+					DFS(neighbor.Value, visited);
 					neighbor = neighbor.Next;
 				}
 			}

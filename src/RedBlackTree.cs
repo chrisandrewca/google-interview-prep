@@ -27,7 +27,6 @@ namespace GPrep
 
 	public class RedBlackTree<T>
 	{
-		private Comparer<T> comparer = Comparer<T>.Default;
 		private RBTNode<T> root;
 
 		public int Count { get; private set; }
@@ -37,7 +36,7 @@ namespace GPrep
 			var node = root;
 			while (node != null)
 			{
-				var result = comparer.Compare(value, node.Value);
+				var result = Comparer<T>.Default.Compare(value, node.Value);
 				if (result < 0)
 				{
 					node = node.Left;
@@ -80,7 +79,7 @@ namespace GPrep
 			var node = root;
 			while (node != null)
 			{
-				var result = comparer.Compare(v.Value, node.Value);
+				var result = Comparer<T>.Default.Compare(v.Value, node.Value);
 				if (result <= 0)
 				{
 					if (node.Left == null)

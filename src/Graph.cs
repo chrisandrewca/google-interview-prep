@@ -3,20 +3,37 @@ using System.Collections.Generic;
 
 namespace GPrep
 {
-	public class GraphNode<T>
+	public class GraphNode<T> : IComparable<GraphNode<T>>
 	{
 		public LinkedList<int> Costs { get; set; }
 		// what if tree tho?
 		public LinkedList<GraphNode<T>> Neighbors { get; set; }
 
-		// right now value is key, but GenInts will produce dupes...
+		public int Key { get; private set; }
 		public T Value { get; set; }
 
-		public GraphNode(T value)
+		public GraphNode(int key, T value)
 		{
 			Costs = new LinkedList<int>();
 			Neighbors = new LinkedList<GraphNode<T>>();
+			Key = key;
 			Value = value;
+		}
+
+		public int CompareTo(GraphNode<T> other)
+		{
+			return Comparer<int>.Default.Compare(Key, other.Key);
+		}
+
+		public override bool Equals(object other)
+		{
+			var o = (GraphNode<T>)other;
+			return Key.Equals(o.Key);
+		}
+
+		public override int GetHashCode()
+		{
+			return Key.GetHashCode();
 		}
 	}
 
@@ -29,9 +46,9 @@ namespace GPrep
 			Nodes = new LinkedList<GraphNode<T>>();
 		}
 
-		public GraphNode<T> AddNode(T value)
+		public GraphNode<T> AddNode(int key, T value)
 		{
-			var node = new GraphNode<T>(value);
+			var node = new GraphNode<T>(key, value);
 			Nodes.InsertBack(node);
 			return node;
 		}
@@ -108,8 +125,7 @@ namespace GPrep
 				// assert Neighbors and Costs length?
 				while (neighbor != null)
 				{
-					// reference comparison...
-					if (neighbor.Value == node)
+					if (neighbor.Value.Equals(node))
 					{
 						// for multiple edges between the same nodes
 						var _neighbor = neighbor;

@@ -21,8 +21,7 @@ namespace GPrep
 			var node = Head;
 			while (node != null)
 			{
-				var comparer = EqualityComparer<T>.Default;
-				if (comparer.Equals(node.Value, value))
+				if (node.Value.Equals(value))
 				{
 					break;
 				}

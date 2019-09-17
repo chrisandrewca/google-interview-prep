@@ -213,7 +213,7 @@ namespace GPrep
 				foreach (var n in numbers)
 				{
 					Console.WriteLine("Add");
-					var node = graph.AddNode(n);
+					var node = graph.AddNode(n, n);
 					_nodes.Add(node);
 				}
 
@@ -258,9 +258,9 @@ namespace GPrep
 			{
 				Console.WriteLine("DFS");
 				var graph = new Graph<int>();
-				var _1 = graph.AddNode(1);
-				var _2 = graph.AddNode(2);
-				var _3 = graph.AddNode(3);
+				var _1 = graph.AddNode(0, 1);
+				var _2 = graph.AddNode(1, 2);
+				var _3 = graph.AddNode(2, 3);
 
 				graph.AddUndirectedEdge(_1, _2, 1);
 				graph.AddUndirectedEdge(_2, _3, 1);
@@ -278,9 +278,9 @@ namespace GPrep
 				Debug.Assert(nodes.Count == 3);
 				PrintList<int>(nodes);
 
-				var _4 = graph.AddNode(4);
-				var _5 = graph.AddNode(5);
-				var _6 = graph.AddNode(6);
+				var _4 = graph.AddNode(3, 4);
+				var _5 = graph.AddNode(4, 5);
+				var _6 = graph.AddNode(5, 6);
 
 				graph.AddDirectedEdge(_4, _5, 1);
 				graph.AddDirectedEdge(_5, _6, 1);

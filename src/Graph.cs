@@ -51,6 +51,14 @@ namespace GPrep
 			to.Costs.InsertBack(cost);
 		}
 
+		public LinkedList<GraphNode<T>> DFSTraverse(GraphNode<T> start)
+		{
+			// TODO make HashTable?
+			var visited = new LinkedList<GraphNode<T>>();
+			DFSTraverse(start, visited);
+			return visited;
+		}
+
 		public void RemoveNode(GraphNode<T> node)
 		{
 			Nodes.Remove(node);
@@ -85,6 +93,22 @@ namespace GPrep
 				}
 
 				_node = _node.Next;
+			}
+		}
+
+		private void DFSTraverse(GraphNode<T> start, LinkedList<GraphNode<T>> visited)
+		{
+			if (start != null && visited.Find(start) == null) // TODO O(n), can be improved
+			{
+				visited.InsertBack(start);
+
+				var neighbor = start.Neighbors.Head;
+				while (neighbor != null)
+				{
+					DFSTraverse(neighbor.Value, visited);
+					neighbor = neighbor.Next;
+				}
+
 			}
 		}
 	}

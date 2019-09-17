@@ -252,6 +252,42 @@ namespace GPrep
 				graph.RemoveNode(null);
 				Debug.Assert(graph.Nodes.Count == 0);
 			};
+
+			// Depth First Search, O(V + E), when used vs DFS?
+			runners["dfs"] = () =>
+			{
+				var graph = new Graph<int>();
+				var _1 = graph.AddNode(1);
+				var _2 = graph.AddNode(2);
+				var _3 = graph.AddNode(3);
+
+				graph.AddUndirectedEdge(_1, _2, 1);
+				graph.AddUndirectedEdge(_2, _3, 1);
+				graph.AddUndirectedEdge(_3, _1, 1);
+
+				var nodes = graph.DFSTraverse(_1);
+				Debug.Assert(nodes.Count == 3);
+				PrintList<int>(nodes);
+
+				nodes = graph.DFSTraverse(_2);
+				Debug.Assert(nodes.Count == 3);
+				PrintList<int>(nodes);
+
+				nodes = graph.DFSTraverse(_3);
+				Debug.Assert(nodes.Count == 3);
+				PrintList<int>(nodes);
+			};
+		}
+
+		static void PrintList<T>(LinkedList<GraphNode<T>> list)
+		{
+			var node = list.Head;
+			while (node != null)
+			{
+				Console.Write($"{node.Value.Value}, ");
+				node = node.Next;
+			}
+			Console.WriteLine();
 		}
 	}
 }

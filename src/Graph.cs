@@ -59,6 +59,36 @@ namespace GPrep
 			return visited;
 		}
 
+		public LinkedList<LinkedList<GraphNode<T>>> FindComponents()
+		{
+			var components = new LinkedList<LinkedList<GraphNode<T>>>();
+			var component = new LinkedList<GraphNode<T>>();
+			var visited = new LinkedList<GraphNode<T>>();
+
+			var node = Nodes.Head;
+			while (node != null)
+			{
+				Console.WriteLine($"node: {node.Value.Value} visited: {visited.Count}");
+				if (visited.Find(node.Value) == null)
+				{
+					DFSTraverse(node.Value, component);
+
+					var cnode = component.Head;
+					while (cnode != null)
+					{
+						visited.InsertBack(cnode.Value);
+						cnode = cnode.Next;
+					}
+
+					components.InsertBack(component);
+					component = new LinkedList<GraphNode<T>>();
+				}
+				node = node.Next;
+			}
+
+			return components;
+		}
+
 		public void RemoveNode(GraphNode<T> node)
 		{
 			Nodes.Remove(node);
@@ -108,7 +138,6 @@ namespace GPrep
 					DFSTraverse(neighbor.Value, visited);
 					neighbor = neighbor.Next;
 				}
-
 			}
 		}
 	}

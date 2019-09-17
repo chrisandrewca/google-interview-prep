@@ -276,6 +276,21 @@ namespace GPrep
 				nodes = graph.DFSTraverse(_3);
 				Debug.Assert(nodes.Count == 3);
 				PrintList<int>(nodes);
+
+				var _4 = graph.AddNode(4);
+				var _5 = graph.AddNode(5);
+				var _6 = graph.AddNode(6);
+
+				graph.AddDirectedEdge(_4, _5, 1);
+				graph.AddDirectedEdge(_5, _6, 1);
+				graph.AddDirectedEdge(_6, _4, 1);
+
+				var components = graph.FindComponents();
+				Debug.Assert(components.Count == 2);
+
+				Console.WriteLine("Components");
+				PrintList<int>(components.Head.Value);
+				PrintList<int>(components.Tail.Value);
 			};
 		}
 

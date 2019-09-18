@@ -23,7 +23,6 @@ namespace GPrep
 			public override bool Equals(object other)
 			{
 				var o = (HashKey)other;
-				Console.WriteLine($"this: {Key} other: {o.Key}");
 				return Key.Equals(o.Key);
 			}
 
@@ -57,7 +56,15 @@ namespace GPrep
 			}
 			else
 			{
-				buckets[i].InsertBack(kvp);
+				var item = buckets[i].Find(kvp);
+				if (item == null)
+				{
+					buckets[i].InsertBack(kvp);
+				}
+				else
+				{
+					item.Value.Value = value;
+				}
 			}
 
 			Count++;

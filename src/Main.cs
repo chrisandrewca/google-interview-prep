@@ -368,6 +368,21 @@ namespace GPrep
 				{
 					Debug.Assert(numbers[i] <= numbers[i + 1]);
 				}
+			}; 
+
+			runners["d"] = () =>
+			{
+				var graph = new Graph<int>();
+				var _1 = graph.AddNode(1, 1);
+				var _2 = graph.AddNode(2, 2);
+				var _3 = graph.AddNode(3, 3);
+
+				graph.AddDirectedEdge(_1, _2, 100);
+				graph.AddDirectedEdge(_1, _3, 8);
+				graph.AddDirectedEdge(_2, _3, 1);
+
+				var cost = Dijkstras(graph.Nodes, _1, _3);
+				Console.WriteLine($"Cost: {cost}");
 			};
 		}
 
@@ -377,6 +392,17 @@ namespace GPrep
 			while (node != null)
 			{
 				Console.Write($"{node.Value.Value}, ");
+				node = node.Next;
+			}
+			Console.WriteLine();
+		}
+
+		static void PrintList<T>(LinkedList<T> list)
+		{
+			var node = list.Head;
+			while (node != null)
+			{
+				Console.Write($"{node.Value}, ");
 				node = node.Next;
 			}
 			Console.WriteLine();
@@ -425,6 +451,83 @@ namespace GPrep
 				visited.Add(node.Key, node);
 			}
 			return visited.GetValues();
+		}
+
+		// assumes graph node keys are reasonable and unique
+		static int Dijkstras<T>(LinkedList<GraphNode<T>> nodes, GraphNode<T> source, GraphNode<T> target)
+		{
+			var costs = new HashTable<int, int>();
+			var prev = new HashTable<int, GraphNode<T>>();
+			var q = new LinkedList<GraphNode<T>>();
+
+			var node = nodes.Head;
+			while (node != null)
+			{
+				var k = node.Value.Key;
+				var n = node.Value;
+				costs[k] = Int32.MaxValue;
+				prev[k] = n;
+				q.InsertBack(n);
+				node = node.Next;
+			}
+
+			costs[source.Key] = 0;
+			while (q.Count > 0)
+			{
+				var u = FindAndRemoveMin<T>(q, costs);
+				var neighbor = u.Neighbors.Head;
+				var cost = u.Costs.Head;
+
+				while (neighbor != null)
+				{
+					var nn = neighbor.Value;
+					var route = costs[u.Key] + cost.Value;
+					if (route < costs[nn.Key])
+					{
+						costs[nn.Key] = route;
+						prev[nn.Key]  = u;
+					}
+
+					neighbor = neighbor.Next;
+					cost = cost.Next;
+				}
+			}
+
+			var p = prev[target.Key];
+			var c = costs[target.Key];
+			Console.Write($"(K: {target.Key}, C: {costs[target.Key]}, P: {prev[target.Key].Key}), ");
+			//while (p.Key != source.Key)
+			//{
+			//	Console.Write($"(K: {p.Key}, C: {costs[p.Key]}, P: {prev[p.Key].Key}), ");
+			//	c += costs[p.Key];
+			//	p = prev[p.Key];
+			//	//Console.WriteLine(p);
+			//}
+			Console.WriteLine();
+			return costs[target.Key];
+		}
+
+		static GraphNode<T> FindAndRemoveMin<T>(LinkedList<GraphNode<T>> nodes, HashTable<int, int> costs)
+		{
+			int cost = Int32.MaxValue;
+			ListNode<GraphNode<T>> u = null;
+
+			var node = nodes.Head;
+			while (node != null)
+			{
+				var k = node.Value.Key;
+				var c = costs[k];
+				if (c < cost)
+				{
+					cost = c;
+					u = node;
+				}
+				node = node.Next;
+				//Console.WriteLine("FindAndRemoveMin");
+			}
+
+			nodes.Remove(u);
+			return u.Value;
 		}
 	}
 }

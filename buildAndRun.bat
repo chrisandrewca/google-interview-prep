@@ -14,4 +14,5 @@ csc ^
 .\src\RedBlackTree.cs ^
 .\src\Graph.cs ^
 .\src\HashTable.cs ^
-.\src\TrieTree.cs && .\build\gprep.exe %*
+.\src\TrieTree.cs ^
+.\src\MergeSort.cs && .\build\gprep.exe %*

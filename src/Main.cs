@@ -313,6 +313,7 @@ namespace GPrep
 				PrintList<int>(nodes);
 			};
 
+			// Hash Table
 			runners["h"] = () =>
 			{
 				var table = new HashTable<int, GraphNode<double>>();
@@ -331,6 +332,7 @@ namespace GPrep
 				}
 			};
 
+			// Trie Tree
 			runners["t"] = () =>
 			{
 				var trie = new TrieTree();
@@ -350,6 +352,22 @@ namespace GPrep
 				Debug.Assert(trie.Find("To") == false);
 				Debug.Assert(trie.Find("Tomat") == false);
 				Debug.Assert(trie.Find("") == false);
+			};
+
+			// Merge Sort O(nlgn)
+			runners["m"] = () =>
+			{
+				var numbers = Utility.GenInts(-100, 100, 100);
+				Console.WriteLine(string.Join(", ", numbers) + "\n");
+
+				var ms = new MergeSort();
+				ms.Sort(numbers);
+				Console.WriteLine(string.Join(", ", numbers));
+
+				for (var i = 0; i < numbers.Length - 1; i++)
+				{
+					Debug.Assert(numbers[i] <= numbers[i + 1]);
+				}
 			};
 		}
 
